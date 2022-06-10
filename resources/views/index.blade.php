@@ -11,6 +11,10 @@
         <div class="row mt-3" id="form">
 
         </div>
+        <div id="app">
+            <form-create></form-create>
+        </div>
+
     </div>
 </div>
 
