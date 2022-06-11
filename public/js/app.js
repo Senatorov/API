@@ -5266,6 +5266,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5319,12 +5321,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Form-create"
+  data: function data() {
+    return {
+      positions: {
+        1: 'Boss',
+        2: 'Manager',
+        3: 'Proger'
+      }
+    };
+  },
+  methods: {
+    getAge: function getAge() {
+      return new Array(87).fill(14).map(function (n, i) {
+        return n + i;
+      });
+    },
+    getCsrf: function getCsrf() {
+      return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    },
+    storeEmployee: function storeEmployee() {
+      var uri = 'http://localhost:8000/api/employee/create';
+      this.axios.post();
+    }
+  }
 });
 
 /***/ }),
@@ -27928,43 +27949,17 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", [
-      _c("div", { staticClass: "form-group mt-1" }, [
-        _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-          _vm._v("Name"),
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "formGroupExampleInput",
-            placeholder: "Name",
-          },
-        }),
-      ]),
+  return _c(
+    "form",
+    [
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.getCsrf() },
+      }),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group mt-1" }, [
-        _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
-          _vm._v("Email"),
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "formGroupExampleInput2",
-            placeholder: "Email",
-          },
-        }),
-      ]),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
       _vm._v(" "),
       _c("div", { staticClass: "form-group mt-1" }, [
         _c("label", { attrs: { for: "exampleFormControlSelect" } }, [
@@ -27977,85 +27972,117 @@ var staticRenderFns = [
             staticClass: "form-control",
             attrs: { id: "exampleFormControlSelect" },
           },
-          [
-            _c("option", [_vm._v("1")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("2")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("3")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("4")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("5")]),
-          ]
+          _vm._l(_vm.getAge(), function (age) {
+            return _c("option", [_vm._v(_vm._s(age))])
+          }),
+          0
         ),
       ]),
       _vm._v(" "),
-      _c("legend", { staticClass: "col-form-label" }, [_vm._v("Radios")]),
+      _c("legend", { staticClass: "col-form-label" }, [_vm._v("Position")]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-check form-check-inline" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: {
-            type: "radio",
-            name: "inlineRadioOptions",
-            id: "inlineRadio1",
-            value: "option1",
-          },
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "form-check-label", attrs: { for: "inlineRadio1" } },
-          [_vm._v("1")]
-        ),
+      _vm._l(_vm.positions, function (position, id) {
+        return _c("div", { staticClass: "form-check form-check-inline" }, [
+          _c("input", {
+            staticClass: "form-check-input",
+            attrs: {
+              type: "radio",
+              name: "inlineRadioOptions",
+              id: id,
+              value: "option1",
+            },
+          }),
+          _vm._v(" "),
+          _c("label", { staticClass: "form-check-label", attrs: { for: id } }, [
+            _vm._v(_vm._s(position)),
+          ]),
+        ])
+      }),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3),
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group mt-1" }, [
+      _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+        _vm._v("Name"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-check form-check-inline" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: {
-            type: "radio",
-            name: "inlineRadioOptions",
-            id: "inlineRadio2",
-            value: "option2",
-          },
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "form-check-label", attrs: { for: "inlineRadio2" } },
-          [_vm._v("2")]
-        ),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          id: "formGroupExampleInput",
+          placeholder: "Name",
+        },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group mt-1" }, [
+      _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
+        _vm._v("Email"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "formGroupExampleInput3" } }, [
-          _vm._v("Salary"),
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "formGroupExampleInput3",
-            placeholder: "Salary",
-          },
-        }),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          id: "formGroupExampleInput2",
+          placeholder: "Email",
+        },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "formGroupExampleInput3" } }, [
+        _vm._v("Salary"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group mt-1" }, [
-        _c(
-          "label",
-          { staticClass: "col-12", attrs: { for: "exampleFormControlFile" } },
-          [_vm._v("Photo Employee")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control-file",
-          attrs: { type: "file", id: "exampleFormControlFile" },
-        }),
-      ]),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          id: "formGroupExampleInput3",
+          placeholder: "Salary",
+        },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group mt-1" }, [
+      _c(
+        "label",
+        { staticClass: "col-12", attrs: { for: "exampleFormControlFile" } },
+        [_vm._v("Photo Employee")]
+      ),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control-file",
+        attrs: {
+          type: "file",
+          id: "exampleFormControlFile",
+          accept: "image/*",
+        },
+      }),
     ])
   },
 ]
@@ -40295,6 +40322,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

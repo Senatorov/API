@@ -1,5 +1,9 @@
 <template>
     <form>
+        <!-- <csrf> -->
+        <input type="hidden" name="_token" :value="getCsrf()">
+        <!-- </csrf> -->
+
         <!-- <name> -->
         <div class="form-group mt-1">
             <label for="formGroupExampleInput">Name</label>
@@ -18,24 +22,16 @@
         <div class="form-group mt-1">
             <label for="exampleFormControlSelect">Select Age Employee</label>
             <select class="form-control" id="exampleFormControlSelect">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option v-for="age in getAge()">{{ age }}</option>
             </select>
         </div>
         <!-- </age> -->
 
         <!-- <role> -->
-        <legend class="col-form-label">Radios</legend>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-            <label class="form-check-label" for="inlineRadio1">1</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-            <label class="form-check-label" for="inlineRadio2">2</label>
+        <legend class="col-form-label">Position</legend>
+        <div class="form-check form-check-inline" v-for="(position, id) in positions">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" :id="id" value="option1">
+            <label class="form-check-label" :for="id">{{ position }}</label>
         </div>
         <!-- </role> -->
 
@@ -49,15 +45,36 @@
         <!-- <photo> -->
         <div class="form-group mt-1">
             <label class="col-12" for="exampleFormControlFile">Photo Employee</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile">
+            <input type="file" class="form-control-file" id="exampleFormControlFile" accept="image/*">
         </div>
         <!-- </photo> -->
     </form>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-    name: "Form-create"
+    data: () => ({
+        positions: {
+            1: 'Boss',
+            2: 'Manager',
+            3: 'Proger'
+        },
+    }),
+    methods: {
+        getAge: function() {
+            return new Array(87).fill(14).map((n, i) => n + i);
+        },
+        getCsrf: function () {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        },
+        storeEmployee: function () {
+            let uri = 'http://localhost:8000/api/employee/create';
+
+            this.axios.post();
+        },
+    }
 }
 </script>
 
