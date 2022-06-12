@@ -8,6 +8,8 @@ require('./bootstrap');
 
 //-------------------------- Vue code --------------------------//
 import Vue from 'vue'
+import axios from 'axios';
+Vue.prototype.axios = axios;
 
 // <Vue config>
 // Vue.config.productionTip = false

@@ -5266,8 +5266,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5321,7 +5319,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5329,7 +5329,8 @@ __webpack_require__.r(__webpack_exports__);
         1: 'Boss',
         2: 'Manager',
         3: 'Proger'
-      }
+      },
+      employee: {}
     };
   },
   methods: {
@@ -5341,9 +5342,19 @@ __webpack_require__.r(__webpack_exports__);
     getCsrf: function getCsrf() {
       return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     },
+    uploadPhoto: function uploadPhoto(e) {
+      // console.log(e.target.files[0]);
+      var photo = e.target.files[0];
+      this.employee.photo = photo;
+    },
     storeEmployee: function storeEmployee() {
-      var uri = 'http://localhost:8000/api/employee/create';
-      this.axios.post();
+      this.axios.post('create', this.employee, {
+        headers: {
+          "Content-type": "application/json"
+        }
+      }).then(function (res) {
+        console.log(res);
+      });
     }
   }
 });
@@ -5358,7 +5369,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -5367,13 +5380,15 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //-------------------------- Vue code --------------------------//
 
 
- // <Vue config>
+
+
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.axios = (axios__WEBPACK_IMPORTED_MODULE_0___default()); // <Vue config>
 // Vue.config.productionTip = false
 // Vue.config.devtools = false
 // </Vue config>
 
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('form-create', (__webpack_require__(/*! ./components/Form-create */ "./resources/js/components/Form-create.vue")["default"]));
-var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('form-create', (__webpack_require__(/*! ./components/Form-create */ "./resources/js/components/Form-create.vue")["default"]));
+var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
   el: '#app'
 });
 
@@ -27957,9 +27972,69 @@ var render = function () {
         domProps: { value: _vm.getCsrf() },
       }),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "form-group mt-1" }, [
+        _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+          _vm._v("Name"),
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.employee.name,
+              expression: "employee.name",
+            },
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "formGroupExampleInput",
+            placeholder: "Name",
+          },
+          domProps: { value: _vm.employee.name },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.employee, "name", $event.target.value)
+            },
+          },
+        }),
+      ]),
       _vm._v(" "),
-      _vm._m(1),
+      _c("div", { staticClass: "form-group mt-1" }, [
+        _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
+          _vm._v("Email"),
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.employee.email,
+              expression: "employee.email",
+            },
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "formGroupExampleInput2",
+            placeholder: "Email",
+          },
+          domProps: { value: _vm.employee.email },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.employee, "email", $event.target.value)
+            },
+          },
+        }),
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group mt-1" }, [
         _c("label", { attrs: { for: "exampleFormControlSelect" } }, [
@@ -27969,13 +28044,46 @@ var render = function () {
         _c(
           "select",
           {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.age,
+                expression: "employee.age",
+              },
+            ],
             staticClass: "form-control",
             attrs: { id: "exampleFormControlSelect" },
+            on: {
+              change: function ($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function (o) {
+                    return o.selected
+                  })
+                  .map(function (o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.employee,
+                  "age",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              },
+            },
           },
-          _vm._l(_vm.getAge(), function (age) {
-            return _c("option", [_vm._v(_vm._s(age))])
-          }),
-          0
+          [
+            _c(
+              "option",
+              { attrs: { selected: "selected", disabled: "disabled" } },
+              [_vm._v("select age")]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.getAge(), function (age) {
+              return _c("option", [_vm._v(_vm._s(age))])
+            }),
+          ],
+          2
         ),
       ]),
       _vm._v(" "),
@@ -27984,12 +28092,21 @@ var render = function () {
       _vm._l(_vm.positions, function (position, id) {
         return _c("div", { staticClass: "form-check form-check-inline" }, [
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.role,
+                expression: "employee.role",
+              },
+            ],
             staticClass: "form-check-input",
-            attrs: {
-              type: "radio",
-              name: "inlineRadioOptions",
-              id: id,
-              value: "option1",
+            attrs: { type: "radio", name: "inlineRadioOptions", id: id },
+            domProps: { value: id, checked: _vm._q(_vm.employee.role, id) },
+            on: {
+              change: function ($event) {
+                return _vm.$set(_vm.employee, "role", id)
+              },
             },
           }),
           _vm._v(" "),
@@ -27999,93 +28116,75 @@ var render = function () {
         ])
       }),
       _vm._v(" "),
-      _vm._m(2),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "formGroupExampleInput3" } }, [
+          _vm._v("Salary"),
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.employee.salary,
+              expression: "employee.salary",
+            },
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "formGroupExampleInput3",
+            placeholder: "Salary",
+          },
+          domProps: { value: _vm.employee.salary },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.employee, "salary", $event.target.value)
+            },
+          },
+        }),
+      ]),
       _vm._v(" "),
-      _vm._m(3),
+      _c("div", { staticClass: "form-group mt-1" }, [
+        _c(
+          "label",
+          { staticClass: "col-12", attrs: { for: "exampleFormControlFile" } },
+          [_vm._v("Photo Employee")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control-file",
+          attrs: {
+            type: "file",
+            id: "exampleFormControlFile",
+            accept: "image/*",
+          },
+          on: { change: _vm.uploadPhoto },
+        }),
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary mt-3 float-end col-md-2",
+          attrs: { type: "submit" },
+          on: {
+            click: function ($event) {
+              $event.preventDefault()
+              return _vm.storeEmployee.apply(null, arguments)
+            },
+          },
+        },
+        [_vm._v("Create")]
+      ),
     ],
     2
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group mt-1" }, [
-      _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-        _vm._v("Name"),
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "formGroupExampleInput",
-          placeholder: "Name",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group mt-1" }, [
-      _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
-        _vm._v("Email"),
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "formGroupExampleInput2",
-          placeholder: "Email",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "formGroupExampleInput3" } }, [
-        _vm._v("Salary"),
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "formGroupExampleInput3",
-          placeholder: "Salary",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group mt-1" }, [
-      _c(
-        "label",
-        { staticClass: "col-12", attrs: { for: "exampleFormControlFile" } },
-        [_vm._v("Photo Employee")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control-file",
-        attrs: {
-          type: "file",
-          id: "exampleFormControlFile",
-          accept: "image/*",
-        },
-      }),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

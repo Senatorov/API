@@ -24,12 +24,12 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3|max',
+            'name' => 'required|string|min:3',
             'email' => 'required|email',
             'age' => 'required|numeric|min:0|not_in:0',
             'role' => 'required|numeric|min:0|not_in:0',
             'salary' => 'required|numeric|min:0|not_in:0',
-            'photo' => 'required|image:jpg, jpeg, png',
+//            'photo' => 'required|image:jpg, jpeg, png',
         ];
     }
 }
