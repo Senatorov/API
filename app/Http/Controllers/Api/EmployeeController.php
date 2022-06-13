@@ -51,7 +51,7 @@ class EmployeeController extends Controller
         $employee->age = $request->age;
         $employee->role = $request->role;
         $employee->salary = $request->salary;
-        $employee->photo = $path;// $request->photo; //когда сделаю форму поменять на path, который в комментарии
+        $employee->photo = $path;
 
         $employee->save();
 

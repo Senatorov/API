@@ -5348,7 +5348,14 @@ __webpack_require__.r(__webpack_exports__);
       this.employee.photo = photo;
     },
     storeEmployee: function storeEmployee() {
-      this.axios.post('create', this.employee, {
+      var data = new FormData();
+      data.append('name', this.employee.name);
+      data.append('email', this.employee.email);
+      data.append('age', this.employee.age);
+      data.append('role', this.employee.role);
+      data.append('salary', this.employee.salary);
+      data.append('photo', this.employee.photo);
+      this.axios.post('api/employee/create', data, {
         headers: {
           "Content-type": "application/json"
         }
@@ -27966,6 +27973,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "form",
+    { attrs: { id: "form" } },
     [
       _c("input", {
         attrs: { type: "hidden", name: "_token" },
@@ -28170,7 +28178,7 @@ var render = function () {
         "button",
         {
           staticClass: "btn btn-primary mt-3 float-end col-md-2",
-          attrs: { type: "submit" },
+          attrs: { type: "submit", name: "photo" },
           on: {
             click: function ($event) {
               $event.preventDefault()

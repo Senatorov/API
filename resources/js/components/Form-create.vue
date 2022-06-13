@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form id="form">
         <!-- <csrf> -->
         <input type="hidden" name="_token" :value="getCsrf()">
         <!-- </csrf> -->
@@ -50,7 +50,7 @@
         </div>
         <!-- </photo> -->
 
-        <button class="btn btn-primary mt-3 float-end col-md-2" type="submit" @click.prevent="storeEmployee">Create</button>
+        <button class="btn btn-primary mt-3 float-end col-md-2" type="submit" name="photo" @click.prevent="storeEmployee">Create</button>
     </form>
 </template>
 
@@ -77,7 +77,16 @@ export default {
             this.employee.photo = photo;
         },
         storeEmployee: function () {
-            this.axios.post('create', this.employee, {
+            let data = new FormData();
+            data.append('name', this.employee.name);
+            data.append('email', this.employee.email);
+            data.append('age', this.employee.age);
+            data.append('role', this.employee.role);
+            data.append('salary', this.employee.salary);
+            data.append('photo', this.employee.photo);
+
+
+            this.axios.post('api/employee/create', data,  {
                 headers: {
                     "Content-type": "application/json",
                 }
