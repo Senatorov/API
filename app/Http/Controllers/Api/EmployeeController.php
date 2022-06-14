@@ -40,18 +40,20 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-//        if ($request->hasFile('photo')) {
-//            $image = $request->file('photo');
-//            $path = $image->store('photo');
-//        }
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $path = $image->store('photo');
+        }
 
         $employee = new Employee();
         $employee->name = $request->name;
         $employee->email = $request->email;
         $employee->age = $request->age;
-        $employee->role = $request->rolee;
-        $employee->salary = $request->salarye;
-        $employee->photo = $request->photo; //когда сделаю форму поменять на path, который в комментарии
+        $employee->role = $request->role;
+        $employee->salary = $request->salary;
+        $employee->photo = $path;
+
+        $employee->save();
 
         return new EmployeeResource($employee);
     }
