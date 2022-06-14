@@ -1,4 +1,5 @@
 <template>
+  <div class="row mt-3">
     <form id="form">
         <!-- <csrf> -->
         <input type="hidden" name="_token" :value="getCsrf()">
@@ -52,6 +53,7 @@
 
         <button class="btn btn-primary mt-3 float-end col-md-2" type="submit" name="photo" @click.prevent="storeEmployee">Create</button>
     </form>
+  </div>
 </template>
 
 <script>

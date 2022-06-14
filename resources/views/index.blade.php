@@ -9,9 +9,9 @@
         <div class="row mt-4">
             <h1 class="text-center">Table Employees</h1>
 
-            <div class="row mt-3">
-                <form-create></form-create>
-            </div>
+            <form-create></form-create>
+
+            <all-employees></all-employees>
 
         </div>
     </div>

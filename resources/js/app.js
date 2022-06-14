@@ -17,6 +17,7 @@ Vue.prototype.axios = axios;
 // </Vue config>
 
 Vue.component('form-create', require('./components/Form-create').default)
+Vue.component('all-employees', require('./components/all-employees').default)
 
 const app = new Vue({
     el: '#app'
